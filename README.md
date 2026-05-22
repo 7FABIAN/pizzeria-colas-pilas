@@ -57,9 +57,19 @@ Trabajas en el sistema de una pizzería universitaria:
 
 ## ❓ Preguntas de Comprensión (Obligatorias en el PR)
 1. ¿Por qué un sistema de delivery usa `Queue` para los pedidos pero `Stack` para la bitácora? ¿Qué problema surgiría si invertimos las estructuras?
-2. ¿Por qué es obligatorio verificar `Count == 0` antes de `Dequeue()` o `Pop()`? ¿Qué ocurre en ejecución si se omite?
+
+   Un sistema de pedidos funciona como Queue (FIFO) porque el primer cliente en comprar debe ser el primero en recibir su comida, evitando que espere indefinidamente. En cambio, una bitácora de errores utiliza un Stack (LIFO) porque al desarrollador le interesa ver el último evento ocurrido de inmediato en la cima, sin tener que recorrer todo el historial antiguo.
+   
+2 ¿Por qué es obligatorio verificar `Count == 0` antes de `Dequeue()` o `Pop()`? ¿Qué ocurre en ejecución si se omite?
+Es obligatorio validar que la estructura no esté vacía antes de extraer un elemento porque no se puede sacar información de la nada. Si olvidas este control, el programa lanzará una excepción de operación inválida (InvalidOperationException) y la aplicación se cerrará inesperadamente en plena ejecución.
+
 3. En el método `Deshacer`, ¿por qué es necesario analizar el texto con `.StartsWith()` antes de revertir? ¿Qué error lógico evitaría esto?
+
+Este método se utiliza para leer el prefijo del comando guardado en el Stack (por ejemplo, saber si empieza con "AGREGAR:" o "BORRAR:"). Esto evita que el sistema revierta las acciones a ciegas, permitiendo aplicar exactamente la operación inversa correcta (borrar lo que se agregó o restaurar lo que se eliminó).
+
 4. ¿Qué ventaja tiene entregar mediante Fork + Pull Request en lugar de un archivo comprimido? ¿Cómo facilita la la retroalimentación?
+Usar Fork y Pull Request (PR) evita enviar archivos basura generados por el entorno de desarrollo (bin/obj) que suelen ir en un .zip. Además, permite que el profesor revise y comente las líneas de código exactas en la web; para corregir, solo subes tus cambios con push y el PR se actualiza automáticamente, eliminando la necesidad de reenviar archivos adjuntos.
+
 
 ## ✅ Checklist de Entrega
 - [ ] Código compila en SharpDevelop sin warnings críticos
